@@ -45,12 +45,6 @@ app.use('/api/payments', paymentRoutes);
 // =====================
 // 404 Handler
 // =====================
-app.use((req, res) => {
-  res.status(404).json({
-    success: false,
-    message: `Cannot find ${req.originalUrl} on this server.`,
-  });
-});
 
 app.get("/test", (req, res) => {
   res.json({
