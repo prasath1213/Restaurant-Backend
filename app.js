@@ -52,6 +52,13 @@ app.use((req, res) => {
   });
 });
 
+app.get("/test", (req, res) => {
+  res.json({
+    success: true,
+    message: "API is working successfully!"
+  });
+});
+
 // =====================
 // Global Error Handler
 // =====================
