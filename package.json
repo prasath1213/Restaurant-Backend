@@ -1,4 +1,6 @@
 {
+
+  "types": "modules",
   "name": "restaurant-delivery-backend",
   "version": "1.0.0",
   "description": "Production-ready Restaurant Food Ordering and Home Delivery Backend (Node.js + Express + MongoDB)",

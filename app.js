@@ -42,6 +42,16 @@ app.use('/uploads', express.static(path.join(__dirname, 'uploads')));
 app.use('/api/cart', cartRoutes);
 app.use('/api/payments', paymentRoutes);
 
+
+app.get("/test", (req, res) => {
+  res.json({
+    success: true,
+    message: "API is working successfully!"
+  });
+});
+
+
+
 // =====================
 // 404 Handler
 // =====================
