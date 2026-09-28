@@ -7,7 +7,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const dns = require('dns'); dns.setServers(['1.1.1.1', '8.8.8.8']);
-const PORT = process.env.PORT || 5001;
+const PORT = process.env.PORT || 5002;
 
 process.on('unhandledRejection', (err) => {
   console.error('UNHANDLED REJECTION 💥 Shutting down...');
