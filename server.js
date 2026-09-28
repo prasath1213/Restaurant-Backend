@@ -52,7 +52,7 @@ const startServer = async () => {
   // Initialize Socket.io on top of the same HTTP server
   const io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_URL || 'http://localhost:3000',
+      origin: process.env.CLIENT_URL ,
       credentials: true,
     },
   });
