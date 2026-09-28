@@ -7,7 +7,7 @@ const http = require('http');
 const { Server } = require('socket.io');
 
 const dns = require('dns'); dns.setServers(['1.1.1.1', '8.8.8.8']);
-const PORT = process.env.PORT;
+const PORT = process.env.PORT || 5001;
 
 process.on('unhandledRejection', (err) => {
   console.error('UNHANDLED REJECTION 💥 Shutting down...');
@@ -25,18 +25,25 @@ const seedOwner = async () => {
   try {
     const User = require('./models/User');
     const existing = await User.findOne({ role: 'owner' });
-    if (!existing) {
-      await User.create({
-        name: 'Owner',
-        email: 'owner@gmail.com',
-        phone: '9999999999',
-        password: 'owner@123',
-        role: 'owner',
-      });
-      console.log('✅ Owner account created → owner@gmail.com / owner@123');
-    } else {
+    if (existing) {
       console.log('ℹ️  Owner account already exists, skipping seed.');
+      return;
     }
+
+    const { OWNER_NAME, OWNER_EMAIL, OWNER_PHONE, OWNER_PASSWORD } = process.env;
+    if (!OWNER_EMAIL || !OWNER_PASSWORD) {
+      console.warn('⚠️  OWNER_EMAIL / OWNER_PASSWORD not set, skipping owner seed.');
+      return;
+    }
+
+    await User.create({
+      name: OWNER_NAME || 'Owner',
+      email: OWNER_EMAIL,
+      phone: OWNER_PHONE || '9999999999',
+      password: OWNER_PASSWORD,
+      role: 'owner',
+    });
+    console.log(`✅ Owner account created → ${OWNER_EMAIL}`);
   } catch (err) {
     console.error('Owner seed error:', err.message);
   }
@@ -52,7 +59,7 @@ const startServer = async () => {
   // Initialize Socket.io on top of the same HTTP server
   const io = new Server(server, {
     cors: {
-      origin: process.env.CLIENT_URL ,
+      origin: process.env.CLIENT_URL || 'http://localhost:5173',
       credentials: true,
     },
   });
